@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.MarkdownRequest;
 import com.example.demo.service.MarkdownService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-@RequiredArgsConstructor
 public class MyController {
 
     private final MarkdownService markdownService;
+
+    @Autowired
+    public MyController(MarkdownService markdownService) {
+        this.markdownService = markdownService;
+    }
 
     @PostMapping(value = "/doc/download", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<byte[]> convertMarkdownToWord(@RequestBody MarkdownRequest request) {
